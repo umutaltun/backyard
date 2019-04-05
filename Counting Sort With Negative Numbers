@@ -27,7 +27,7 @@ void RandomFill(int Array[]) {
 	}
 }
 
-void ModifiedSelectionSort(int Array[], int SortedArray[], int CountArray[]) {
+void ModifiedCountingSort(int Array[], int SortedArray[], int CountArray[]) {
 	int min_value = 0; //If there isn't number smaller than 0, min_index must be 0 because of definition
 	int max_value = INT_MIN;
 	//Finding minimum and maximum value...
@@ -71,5 +71,5 @@ int main() {
 	int CountArray[10*MAX+1]; //Because of rand() function (-5120 to 5119)
 	ArrayCleaner(Array,CountArray);
 	RandomFill(Array);
-	ModifiedSelectionSort(Array,SortedArray,CountArray);
+	ModifiedCountingSort(Array,SortedArray,CountArray);
 }
