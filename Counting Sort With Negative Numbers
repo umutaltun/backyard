@@ -50,7 +50,7 @@ void ModifiedCountingSort(int Array[], int SortedArray[], int CountArray[]) {
 			CountArray[-3-(-3)]++;
 		*/
 	}
-	//Sorting stage like CountingSort but it has (+ min_index) part
+	//Sorting stage is like CountingSort but it has (+ min_index) part
 	for (int i = 0, k = 0; i < max_index; i++) {
 		for (int j = CountArray[i]; j > 0; j--) {
 			SortedArray[k++] = i + min_index;
