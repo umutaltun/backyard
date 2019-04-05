@@ -1,0 +1,75 @@
+/* 
+Counting Sort With Negative Numbers 
+By Umut Altun
+05.04.2019
+
+Annotation: I am beginner and i know it has some problems but i wanted to share it maybe it can give someone to some thought
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <time.h>
+#define MAX 1024 //Input Array's size
+
+void ArrayCleaner(int Array[], int CountArray[]) {
+	for (int i = 0; i < MAX; i++) {
+		Array[i] = 0;	
+	}
+	for (int i = 0; i < 10*MAX+1; i++) {
+		CountArray[i] = 0;
+	}
+}
+
+void RandomFill(int Array[]) {
+	for (int i = 0; i < MAX; i++) {
+		Array[i] = rand() % 10240 - 5120; //If you want to change values, must change CountArray's size		
+	}
+}
+
+void ModifiedSelectionSort(int Array[], int SortedArray[], int CountArray[]) {
+	int min_value = 0; //If there isn't number smaller than 0, min_index must be 0 because of definition
+	int max_value = INT_MIN;
+	//Finding minimum and maximum value...
+	for (int i = 0; i < MAX; i++) {
+		if (Array[i] < min_value) {
+			min_value = Array[i];
+		}
+		if (Array[i] > max_value) {
+			max_value = Array[i];
+		}
+	}
+	int min_index = min_value; //CountArray's first index must be smallest number of Array
+	int max_index = max_value - min_index; //CountArray's last index must be biggest number of Array
+	//Counting stage is like CountingSort but it has (- min_index)
+	for (int i = 0; i < MAX; i++) {
+		CountArray[Array[i] - min_index]++; 
+		/* 
+			For example, if -3 is smallest number of Array, 
+			-3-(-3) = 0 so -3's index will be 0,
+			CountArray[-3-(-3)]++;
+		*/
+	}
+	//Sorting stage like CountingSort but it has (+ min_index) part
+	for (int i = 0, k = 0; i < max_index; i++) {
+		for (int j = CountArray[i]; j > 0; j--) {
+			SortedArray[k++] = i + min_index;
+			/* 
+				For example, if CountArray[0] is 3,
+				It means we have to add 0 + min_index (it gives us smallest number for i == 0) number to SortedArray because of Counting stage
+				Value of CountArrays[i] is amount of i + min_index number
+			*/
+			printf("%d\n",SortedArray[k-1]); //Writing...
+		}
+	}
+}
+
+int main() {
+	srand(time(NULL));
+	int Array[MAX+1]; //Input array
+	int SortedArray[MAX+1];	//Output array
+	int CountArray[10*MAX+1]; //Because of rand() function (-5120 to 5119)
+	ArrayCleaner(Array,CountArray);
+	RandomFill(Array);
+	ModifiedSelectionSort(Array,SortedArray,CountArray);
+}
